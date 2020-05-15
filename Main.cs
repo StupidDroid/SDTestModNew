@@ -21,9 +21,9 @@ namespace SDTestModNew
         public override void PreLoad()
         {
             HarmonyInstance.PatchAll();
-            TranslationPatcher.AddActorTranslation("1." + ModdedIds.MAPLE_SLIME.ToString().ToLower(), "Maple Slime");
-            TranslationPatcher.AddActorTranslation("1." + ModdedIds.MAPLE_PLORT.ToString().ToLower(), "Maple Plort");
-            new SlimePediaEntryTranslation(ModdedIds.MAPLE_SLIMES).SetTitleTranslation("Maple Slimes").SetIntroTranslation("Intro Translation").SetSlimeologyTranslation("Slimeology Translation").SetDietTranslation("Fruit").SetFavoriteTranslation("Favorite Food").SetRisksTranslation("Risks").SetPlortonomicsTranslation("Plortonomics");
+            TranslationPatcher.AddActorTranslation("1.maple_slime", "Maple Slime");
+            TranslationPatcher.AddActorTranslation("1.maple_plort", "Maple Plort");
+            new SlimePediaEntryTranslation(ModdedIds.MAPLE_SLIMES).SetTitleTranslation("Maple Slimes").SetIntroTranslation("Intro Translation").SetSlimeologyTranslation("Slimeology Translation").SetDietTranslation("Fruit").SetFavoriteTranslation("Pogofruit").SetRisksTranslation("Risks").SetPlortonomicsTranslation("Plortonomics");
             PlortRegistry.AddPlortEntry(ModdedIds.MAPLE_PLORT, new ProgressDirector.ProgressType[] {
                 ProgressDirector.ProgressType.NONE
             });
@@ -77,12 +77,12 @@ namespace SDTestModNew
                 if (!flag)
                 {
                     Material material = UnityEngine.Object.Instantiate<Material>(slimeAppearanceStructure.DefaultMaterials[0]);
-                    material.SetColor(topColorNameId, Color.red);
-                    material.SetColor(middleColorNameId, Color.red);
-                    material.SetColor(bottomColorNameId, Color.red);
+                    material.SetColor(topColorNameId, new Color(216.0f / 255.0f, 120.0f / 255.0f , 63.0f / 255.0f));
+                    material.SetColor(middleColorNameId, new Color(194.0f / 255.0f, 99.0f / 255.0f, 44.0f / 255.0f));
+                    material.SetColor(bottomColorNameId, new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f));
                     material.SetColor("_SpecColor", Color.red);
-                    material.SetFloat("_Shininess", 50f);
-                    material.SetFloat("_Gloss", 50f);
+                    material.SetFloat("_Shininess", 13f);
+                    material.SetFloat("_Gloss", 13f);
                     slimeAppearanceStructure.DefaultMaterials[0] = material;
                 }
             }
@@ -90,10 +90,10 @@ namespace SDTestModNew
             {
                 bool flag2 = slimeExpressionFace.Mouth;
                 if (flag2)
-                {
-                    slimeExpressionFace.Mouth.SetColor("_MouthBot", Color.black);
-                    slimeExpressionFace.Mouth.SetColor("_MouthMid", Color.black);
-                    slimeExpressionFace.Mouth.SetColor("_MouthTop", Color.black);
+                { 
+                    slimeExpressionFace.Mouth.SetColor("_MouthBot", new Color(145.0f / 255.0f, 17.0f / 255.0f, 17.0f / 255.0f));
+                    slimeExpressionFace.Mouth.SetColor("_MouthMid", new Color(145.0f / 255.0f, 17.0f / 255.0f, 17.0f / 255.0f));
+                    slimeExpressionFace.Mouth.SetColor("_MouthTop", new Color(145.0f / 255.0f, 17.0f / 255.0f, 17.0f / 255.0f));
                 }
 
                 bool flag3 = slimeExpressionFace.Eyes;
@@ -108,9 +108,13 @@ namespace SDTestModNew
             mapleAppearance.Face.OnEnable();
             mapleAppearance.ColorPalette = new SlimeAppearance.Palette
             {
-                Bottom = Color.red,
-                Middle = Color.red,
-                Top = Color.red
+                Bottom = new Color(139.0f / 255.0f, 60.0f / 255.0f, 13.0f / 255.0f),
+                Middle = new Color(139.0f / 255.0f, 60.0f / 255.0f, 13.0f / 255.0f),
+                Top = new Color(139.0f / 255.0f, 60.0f / 255.0f, 13.0f / 255.0f)
+            };
+            mapleDefinition.AppearancesDefault = new SlimeAppearance[]
+            {
+                mapleAppearance
             };
             mapleGameObject.GetComponent<Identifiable>().id = ModdedIds.MAPLE_SLIME;
             LookupRegistry.RegisterIdentifiablePrefab(mapleGameObject);
@@ -120,17 +124,19 @@ namespace SDTestModNew
             maplePlortObject.GetComponent<Identifiable>().id = ModdedIds.MAPLE_PLORT;
             maplePlortObject.name = "maplePlort";
             maplePlortMaterial = UnityEngine.Object.Instantiate<Material>(maplePlortMaterial);
-            maplePlortMaterial.SetColor(topColorNameId, new Color(182f, 35f, 35f));
-            maplePlortMaterial.SetColor(middleColorNameId, new Color(182f, 35f, 35f));
-            maplePlortMaterial.SetColor(bottomColorNameId, new Color(182f, 35f, 35f));
-            maplePlortObject.GetComponent<MeshRenderer>().material = maplePlortMaterial;
+            maplePlortMaterial.SetColor(topColorNameId, new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f));
+            maplePlortMaterial.SetColor(middleColorNameId, new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f));
+            maplePlortMaterial.SetColor(bottomColorNameId, new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f));
+            maplePlortObject.GetComponentInChildren<MeshRenderer>().material = maplePlortMaterial;
             LookupRegistry.RegisterIdentifiablePrefab(maplePlortObject);
             Sprite maplePlortSprite = IMG2Sprite.LoadNewSprite("SDTestModNew.MaplePlort.png");
-            LookupRegistry.RegisterVacEntry(ModdedIds.MAPLE_PLORT, new Color(182f, 35f, 35f), maplePlortSprite);
+            LookupRegistry.RegisterVacEntry(ModdedIds.MAPLE_PLORT, new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f), maplePlortSprite);
             AmmoRegistry.RegisterAmmoPrefab(PlayerState.AmmoMode.DEFAULT, maplePlortObject);
             Sprite mapleSlimeSprite = IMG2Sprite.LoadNewSprite("SDTestModNew.MapleSlime.png");
+            LookupRegistry.RegisterVacEntry(ModdedIds.MAPLE_SLIME, Color.red, mapleSlimeSprite);
+            AmmoRegistry.RegisterAmmoPrefab(PlayerState.AmmoMode.DEFAULT, mapleGameObject);
             PediaRegistry.RegisterIdEntry(ModdedIds.MAPLE_SLIMES, mapleSlimeSprite);
-            PlortRegistry.AddEconomyEntry(ModdedIds.MAPLE_PLORT, 10f, 40f);
+            PlortRegistry.AddEconomyEntry(ModdedIds.MAPLE_PLORT, 35f, 50f);
             DroneRegistry.RegisterBasicTarget(ModdedIds.MAPLE_PLORT);
         }
 
