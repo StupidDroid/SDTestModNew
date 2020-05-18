@@ -64,7 +64,6 @@ C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\bin\Debug\UnityEngine.Clu
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\bin\Debug\UnityEngine.CrashReportingModule.dll
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\bin\Debug\UnityEngine.PerformanceReportingModule.dll
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\bin\Debug\UnityEngine.VRModule.dll
-C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.csprojAssemblyReference.cache
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.csproj.CoreCompileInputs.cache
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.csproj.CopyComplete
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.dll

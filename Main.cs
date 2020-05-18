@@ -23,7 +23,7 @@ namespace SDTestModNew
             HarmonyInstance.PatchAll();
             TranslationPatcher.AddActorTranslation("l." + ModdedIds.MAPLE_SLIME.ToString().ToLower(), "Maple Slime");
             TranslationPatcher.AddActorTranslation("l." + ModdedIds.MAPLE_PLORT.ToString().ToLower(), "Maple Plort");
-            new SlimePediaEntryTranslation(ModdedIds.MAPLE_SLIMES).SetTitleTranslation("Maple Slimes").SetIntroTranslation("Intro Translation").SetSlimeologyTranslation("Slimeology Translation").SetDietTranslation("Fruit").SetFavoriteTranslation("Pogofruit").SetRisksTranslation("Risks").SetPlortonomicsTranslation("Plortonomics");
+            new SlimePediaEntryTranslation(ModdedIds.MAPLE_SLIMES).SetTitleTranslation("Maple Slimes").SetIntroTranslation("Pancakes, anyone?").SetSlimeologyTranslation("A syrupy relative of the Honey Slime, the Maple Slimes are a fall favorite which can be found in the Moss Blanket. It is rumored that they were created in a collaboration between Ogden Ortiz and Viktor Humphries and then got loose. Maybe someday they'll make Butter Slimes too...").SetDietTranslation("Fruit").SetFavoriteTranslation("Pogofruit").SetRisksTranslation("These slimes produce very sticky plorts. If they get loose, you'll have a very sticky situation on your very sticky hands. Best not let that happen.").SetPlortonomicsTranslation("These delicious morsels are just about the best thing since sliced... anything! They're highly prized by top chefs and breakfast enthusiasts alike. There's nothing like the smell of warm syrup to wake up a hungry rancher.");
             PlortRegistry.AddPlortEntry(ModdedIds.MAPLE_PLORT, new ProgressDirector.ProgressType[] {
                 ProgressDirector.ProgressType.NONE
             });
@@ -110,8 +110,11 @@ namespace SDTestModNew
             {
                 Bottom = new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f),
                 Middle = new Color(194.0f / 255.0f, 99.0f / 255.0f, 44.0f / 255.0f),
-                Top = new Color(216.0f / 255.0f, 120.0f / 255.0f, 63.0f / 255.0f)
+                Top = new Color(216.0f / 255.0f, 120.0f / 255.0f, 63.0f / 255.0f),
+                Ammo = new Color(194.0f / 255.0f, 99.0f / 255.0f, 44.0f / 255.0f)
             };
+            Sprite mapleSlimeSprite = IMG2Sprite.LoadNewSprite("SDTestModNew.MapleSlime.png");
+            mapleAppearance.Icon = mapleSlimeSprite;
             mapleDefinition.AppearancesDefault = new SlimeAppearance[]
             {
                 mapleAppearance
@@ -132,8 +135,6 @@ namespace SDTestModNew
             Sprite maplePlortSprite = IMG2Sprite.LoadNewSprite("SDTestModNew.MaplePlort.png");
             LookupRegistry.RegisterVacEntry(ModdedIds.MAPLE_PLORT, new Color(182.0f / 255.0f, 86.0f / 255.0f, 33.0f / 255.0f), maplePlortSprite);
             AmmoRegistry.RegisterAmmoPrefab(PlayerState.AmmoMode.DEFAULT, maplePlortObject);
-            Sprite mapleSlimeSprite = IMG2Sprite.LoadNewSprite("SDTestModNew.MapleSlime.png");
-            LookupRegistry.RegisterVacEntry(ModdedIds.MAPLE_SLIME, Color.red, mapleSlimeSprite);
             AmmoRegistry.RegisterAmmoPrefab(PlayerState.AmmoMode.DEFAULT, mapleGameObject);
             PediaRegistry.RegisterIdEntry(ModdedIds.MAPLE_SLIMES, mapleSlimeSprite);
             PlortRegistry.AddEconomyEntry(ModdedIds.MAPLE_PLORT, 35f, 50f);
@@ -144,7 +145,6 @@ namespace SDTestModNew
         // Used for editing existing assets in the game, not a registry step
         public override void PostLoad()
         {
- 
         }
 
         private static int topColorNameId = Shader.PropertyToID("_TopColor");
