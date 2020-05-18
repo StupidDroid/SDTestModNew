@@ -70,3 +70,4 @@ C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.dl
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.pdb
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.Properties.Resources.resources
 C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.csproj.GenerateResource.cache
+C:\Users\Tucker\source\repos\SDTestModNew\SDTestModNew\obj\Debug\SDTestModNew.csprojAssemblyReference.cache
