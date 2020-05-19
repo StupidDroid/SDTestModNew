@@ -26,6 +26,7 @@ namespace SDTestModNew
             HarmonyInstance.PatchAll();
             TranslationPatcher.AddActorTranslation("l." + ModdedIds.MAPLE_SLIME.ToString().ToLower(), "Maple Slime");
             TranslationPatcher.AddActorTranslation("l." + ModdedIds.MAPLE_PLORT.ToString().ToLower(), "Maple Plort");
+            TranslationPatcher.AddActorTranslation("l." + ModdedIds.TEST_CRATE_01.ToString().ToLower(), "Test Crate");
             new SlimePediaEntryTranslation(ModdedIds.MAPLE_SLIMES).SetTitleTranslation("Maple Slimes").SetIntroTranslation("Pancakes, anyone?").SetSlimeologyTranslation("A syrupy relative of the Honey Slime, the Maple Slimes are a fall favorite which can be found in the Moss Blanket. It is rumored that they were created in a collaboration between Ogden Ortiz and Viktor Humphries and then got loose. Maybe someday they'll make Butter Slimes too...").SetDietTranslation("Fruit").SetFavoriteTranslation("Pogofruit").SetRisksTranslation("These slimes produce very sticky plorts. If they get loose, you'll have a very sticky situation on your very sticky hands. Best not let that happen.").SetPlortonomicsTranslation("These delicious morsels are just about the best thing since sliced... anything! They're highly prized by top chefs and breakfast enthusiasts alike. There's nothing like the smell of warm syrup to wake up a hungry rancher.");
             new SlimePediaEntryTranslation(ModdedIds.CARAMEL_APPLES).SetTitleTranslation("Caramel Apples").SetIntroTranslation("Intro TK").SetDescriptionTranslation("Description TK");
             PlortRegistry.AddPlortEntry(ModdedIds.MAPLE_PLORT, new ProgressDirector.ProgressType[] {
@@ -145,15 +146,24 @@ namespace SDTestModNew
             PlortRegistry.AddEconomyEntry(ModdedIds.MAPLE_PLORT, 35f, 50f);
             DroneRegistry.RegisterBasicTarget(ModdedIds.MAPLE_PLORT);
 
-            Mesh pogoMesh = SRSingleton<GameContext>.Instance.LookupDirector.GetPrefab(Identifiable.Id.POGO_FRUIT).GetComponent<Mesh>();
-            MeshRenderer[] pogoMeshRenderers = SRSingleton<GameContext>.Instance.LookupDirector.GetPrefab(Identifiable.Id.POGO_FRUIT).GetComponentsInChildren<MeshRenderer>();
-            MeshRenderer pogoMeshRenderer = Array.Find<MeshRenderer>(pogoMeshRenderers, renderer => renderer.name == "model_pogofruit");
-            Material[] pogoMaterials = pogoMeshRenderer.materials;
-            SRML.Console.Console.Log("# of pogoMaterials: " + pogoMaterials.Length.ToString());
-            FoodTemplate caramelAppleTemplate = new FoodTemplate("caramelApple", ModdedIds.CARAMEL_APPLE_FRUIT, ModdedIds.CARAMEL_APPLES, FoodTemplate.Type.FRUIT, pogoMesh, pogoMaterials);
-            caramelAppleTemplate.SetTranslation("Caramel Apple");
+            Mesh pogoMesh = PrefabUtils.CopyPrefab(SRSingleton<GameContext>.Instance.LookupDirector.GetPrefab(Identifiable.Id.POGO_FRUIT)).GetComponent<Mesh>();
+            MeshRenderer[] pogoMeshRenderers = PrefabUtils.CopyPrefab(SRSingleton<GameContext>.Instance.LookupDirector.GetPrefab(Identifiable.Id.POGO_FRUIT)).GetComponentsInChildren<MeshRenderer>();
+            IEnumerable<Material> pogoMaterials = new List<Material>();
+            foreach(MeshRenderer renderer in pogoMeshRenderers)
+            {
+                foreach(Material material in renderer.materials)
+                {
+                    pogoMaterials = pogoMaterials.Append(material);
+                }
+            }
+            SRML.Console.Console.Log("pogoMaterials.Count(): " + pogoMaterials.Count().ToString());
+            SRML.Console.Console.Log("pogoMaterials.ToArray().Length: " + pogoMaterials.ToArray().Length.ToString());
+            TestingUtils.DumpChildComponents(Identifiable.Id.POGO_FRUIT);
+            FoodTemplate caramelAppleTemplate = new FoodTemplate("caramelApple", ModdedIds.CARAMEL_APPLE_FRUIT, ModdedIds.CARAMEL_APPLES, FoodTemplate.Type.FRUIT, pogoMesh, pogoMaterials.ToArray());
+            caramelAppleTemplate = caramelAppleTemplate.SetTranslation("Caramel Apple");
             GameObject caramelAppleObject = caramelAppleTemplate.Create().ToPrefab();
             caramelAppleObject.GetComponent<Identifiable>().id = ModdedIds.CARAMEL_APPLE_FRUIT;
+            caramelAppleObject.GetComponent<Vacuumable>().size = Vacuumable.Size.NORMAL;
             caramelAppleObject.name = "caramelApple";
             LookupRegistry.RegisterIdentifiablePrefab(caramelAppleObject);
             Sprite caramelAppleSprite = IMG2Sprite.LoadNewSprite("SDTestModNew.CaramelApple.png");
@@ -161,6 +171,21 @@ namespace SDTestModNew
             AmmoRegistry.RegisterAmmoPrefab(PlayerState.AmmoMode.DEFAULT, caramelAppleObject);
             PediaRegistry.RegisterIdEntry(ModdedIds.CARAMEL_APPLES, caramelAppleSprite);
             DroneRegistry.RegisterBasicTarget(ModdedIds.CARAMEL_APPLE_FRUIT);
+            TestingUtils.DumpChildComponents(ModdedIds.CARAMEL_APPLE_FRUIT);
+
+            CrateTemplate testCrateTemplate = new CrateTemplate("testCrate", ModdedIds.TEST_CRATE_01);
+            testCrateTemplate = testCrateTemplate.SetSpawnInfo(3, 5);
+            List<BreakOnImpact.SpawnOption> testCrateSpawnOptions = new List<BreakOnImpact.SpawnOption>();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.MANGO_FRUIT, 1.5f)).ToList();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.POGO_FRUIT, 3.0f)).ToList();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.CARROT_VEGGIE, 3.0f)).ToList();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.OCAOCA_VEGGIE, 1.5f)).ToList();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.PEAR_FRUIT, 0.25f)).ToList();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.PARSNIP_VEGGIE, 0.25f)).ToList();
+            testCrateSpawnOptions = testCrateSpawnOptions.Append(SpawnOptionByID(Identifiable.Id.GINGER_VEGGIE, 0.0001f)).ToList();
+            testCrateTemplate.SetSpawnOptions(testCrateSpawnOptions);
+            GameObject testCrateObject = testCrateTemplate.Create().ToPrefab();
+            LookupRegistry.RegisterIdentifiablePrefab(testCrateObject);
         }
 
         // Called after all mods Load's have been called
@@ -172,6 +197,14 @@ namespace SDTestModNew
         private static int topColorNameId = Shader.PropertyToID("_TopColor");
         private static int middleColorNameId = Shader.PropertyToID("_MiddleColor");
         private static int bottomColorNameId = Shader.PropertyToID("_BottomColor");
+
+        private BreakOnImpact.SpawnOption SpawnOptionByID(Identifiable.Id id, float weight)
+        {
+            BreakOnImpact.SpawnOption spawnOption = new BreakOnImpact.SpawnOption();
+            spawnOption.spawn = SRSingleton<GameContext>.Instance.LookupDirector.GetPrefab(id);
+            spawnOption.weight = weight;
+            return spawnOption;
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,5 +17,6 @@ namespace SDTestModNew
         public static readonly PediaDirector.Id MAPLE_SLIMES;
         public static readonly PediaDirector.Id CARAMEL_APPLES;
         public static readonly Identifiable.Id CARAMEL_APPLE_FRUIT;
+        public static readonly Identifiable.Id TEST_CRATE_01;
     }
 }
